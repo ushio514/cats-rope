@@ -21,6 +21,6 @@ public class StartButtonFunc : MonoBehaviour
 
     private void OnSwitchLevel()
     {
-        SceneManager.LoadScene("Stage1");
+        SceneManager.LoadScene("TestScene");
     }
 }
