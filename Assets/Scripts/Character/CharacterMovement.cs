@@ -87,12 +87,21 @@ public class CharacterMovement : MonoBehaviour
             playerObject.GetComponent<BoxCollider2D>().enabled = false;
             GameObject.FindWithTag("MainCamera").GetComponent<CameraFollower>().following = false;
             StartCoroutine("DeathDelay");
+        }else if (collision.gameObject.tag.Contains("NextLevel"))
+        {
+            string name = collision.gameObject.name;
+            string levelName = collision.gameObject.name.Substring(name.LastIndexOf("_") + 1);
+            if (levelName != "END")
+            {
+                SceneManager.LoadScene(levelName);
+
+            }
         }
     }
 
     IEnumerator DeathDelay()
     {
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene("Start");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
