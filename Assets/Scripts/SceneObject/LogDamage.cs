@@ -7,10 +7,9 @@ public class LogDamage : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name.Contains("dog"))
+        if (collision.gameObject.tag.Contains("Thorn")||collision.gameObject.tag.Contains("DogMove"))
         {
-            GameObject dog = GameObject.Find("dog");
-            Destroy(dog);
+            Destroy(collision.gameObject);
         }
     }
 

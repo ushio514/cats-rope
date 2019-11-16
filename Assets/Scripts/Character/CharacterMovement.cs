@@ -16,7 +16,10 @@ public class CharacterMovement : MonoBehaviour
     private bool isJumpping = false;
     private bool isReleasedJump = true;
     private bool isJumpPressed = false;
+    private bool isHitWallL = false;
+    private bool isHitWallR = false;
     private Vector2 velco = new Vector2();
+    private readonly Vector2 horiz = new Vector2(1.0f, 0.0f);
     private readonly Vector2 verVec = new Vector2(0.0f, 1.0f);
     public void Start()
     {
@@ -56,6 +59,18 @@ public class CharacterMovement : MonoBehaviour
         }
         velco.x = deltaX;
         velco.y = oldVel.y;
+        if(isHitWallL)
+        {
+            if(velco.x < 0.0f)
+                velco.x = 0.0f;
+            isHitWallL = false;
+        }
+        if (isHitWallR)
+        {
+            if (velco.x > 0.0f)
+                velco.x = 0.0f;
+            isHitWallR = false;
+        }
         rigidbodyObject.velocity = velco;
     }
 
@@ -68,8 +83,20 @@ public class CharacterMovement : MonoBehaviour
             {
                 return;
             }
+            if ((Vector2.Dot(cpoint.normal, horiz) == 1.0f)&& collision.gameObject.tag.Contains("Terrain"))
+            {
+                isHitWallL = true;
+                //Debug.Log("wallL");
+                return;
+            }
+            if ((Vector2.Dot(cpoint.normal, horiz) == -1.0f) && collision.gameObject.tag.Contains("Terrain"))
+            {
+                isHitWallR = true;
+                //Debug.Log("wallR");
+                return;
+            }
         }
-        if (collision.gameObject.tag.Contains("Terrain"))
+        if (collision.gameObject.tag.Contains("Terrain")||collision.gameObject.tag.Contains("Log"))
         {
             if (rigidbodyObject.velocity.y != 0.0f) return;
             isJumpping = false;
@@ -79,7 +106,7 @@ public class CharacterMovement : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag.Contains("Thorn"))
+        if (collision.gameObject.tag.Contains("Thorn")||collision.gameObject.tag.Contains("DogMove"))
         {
             Debug.Log("DIED!");
             isProcInput = false;
