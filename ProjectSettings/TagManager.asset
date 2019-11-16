@@ -8,7 +8,6 @@ TagManager:
   - Thorn
   - NextLevel
   - Log
-  - DogMove
   layers:
   - Default
   - TransparentFX

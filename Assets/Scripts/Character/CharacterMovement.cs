@@ -29,14 +29,10 @@ public class CharacterMovement : MonoBehaviour
         rendererObject = playerObject.GetComponent<SpriteRenderer>();
     }
 
-    public void Update()
-    {
-        isJumpPressed = Input.GetKey(KeyCode.W);
-    }
-
     public void FixedUpdate()
     {
         if (!isProcInput) return;
+        isJumpPressed = Input.GetKey(KeyCode.W);
         float inXAxis = Input.GetAxis("Horizontal");
         float inYAxis = isJumpPressed ? 1.0f : 0.0f;
         float deltaX = inXAxis * speed;
@@ -61,14 +57,21 @@ public class CharacterMovement : MonoBehaviour
         velco.y = oldVel.y;
         if(isHitWallL)
         {
-            if(velco.x < 0.0f)
+            if (velco.x < 0.0f)
+            {
                 velco.x = 0.0f;
+
+                playerObject.transform.position = new Vector3(playerObject.transform.position.x + 0.0005f, playerObject.transform.position.y);
+            }
             isHitWallL = false;
         }
         if (isHitWallR)
         {
             if (velco.x > 0.0f)
+            {
                 velco.x = 0.0f;
+                playerObject.transform.position = new Vector3(playerObject.transform.position.x - 0.0005f, playerObject.transform.position.y);
+            }
             isHitWallR = false;
         }
         rigidbodyObject.velocity = velco;
@@ -78,7 +81,7 @@ public class CharacterMovement : MonoBehaviour
     {
         foreach(ContactPoint2D cpoint in collision.contacts)
         {
-            // Debug.DrawRay(cpoint.point, cpoint.normal, Color.red, 10.0f);
+            //Debug.DrawRay(cpoint.point, cpoint.normal, Color.red, 10.0f);
             if (Mathf.Abs(Vector2.Dot(cpoint.normal, verVec)) < 0.0f) 
             {
                 return;
@@ -120,8 +123,13 @@ public class CharacterMovement : MonoBehaviour
             string levelName = collision.gameObject.name.Substring(name.LastIndexOf("_") + 1);
             if (levelName != "END")
             {
+                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
                 SceneManager.LoadScene(levelName);
-
+            }
+            else
+            {
+                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+                SceneManager.LoadScene("MainMenu");
             }
         }
     }

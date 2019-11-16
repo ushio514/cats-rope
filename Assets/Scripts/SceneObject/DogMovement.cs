@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DogMovement : MonoBehaviour
 {
-    private GameObject dog = null;
     private Rigidbody2D dogRigid = null;
     private Transform dogTrans = null;
     private SpriteRenderer dogRender = null;
@@ -17,10 +16,9 @@ public class DogMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        dog = GameObject.FindWithTag("DogMove");
-        dogTrans = dog.GetComponent<Transform>();
-        dogRigid = dog.GetComponent<Rigidbody2D>();
-        dogRender = dog.GetComponent<SpriteRenderer>();
+        dogTrans = GetComponent<Transform>();
+        dogRigid = GetComponent<Rigidbody2D>();
+        dogRender = GetComponent<SpriteRenderer>();
         vel.y = 0.0f;
         vel.x = -dogSpeed;
     }
