@@ -13,7 +13,7 @@ public class ExitButtonFunc : MonoBehaviour
 
     private void OnClick()
     {
-        // Application.Quit();
-        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
+       // UnityEditor.EditorApplication.isPlaying = false;
     }
 }

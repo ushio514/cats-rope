@@ -60,7 +60,7 @@ public class CharacterMovement : MonoBehaviour
             if (velco.x < 0.0f)
             {
                 velco.x = 0.0f;
-                playerObject.transform.position = new Vector3(playerObject.transform.position.x + 0.0006f, playerObject.transform.position.y);
+                playerObject.transform.position = new Vector3(playerObject.transform.position.x + 0.0005f, playerObject.transform.position.y);
             }
             isHitWallL = false;
         }
@@ -69,7 +69,7 @@ public class CharacterMovement : MonoBehaviour
             if (velco.x > 0.0f)
             {
                 velco.x = 0.0f;
-                playerObject.transform.position = new Vector3(playerObject.transform.position.x - 0.0006f, playerObject.transform.position.y);
+                playerObject.transform.position = new Vector3(playerObject.transform.position.x - 0.0005f, playerObject.transform.position.y);
             }
             isHitWallR = false;
         }
@@ -136,6 +136,7 @@ public class CharacterMovement : MonoBehaviour
     IEnumerator DeathDelay()
     {
         yield return new WaitForSeconds(2);
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
